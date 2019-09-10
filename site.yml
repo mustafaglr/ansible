@@ -1,6 +1,5 @@
 - name: Create 
-  hosts: localhost
-  connection: local
+  hosts: server
   become: yes
   gather_facts: no
 
