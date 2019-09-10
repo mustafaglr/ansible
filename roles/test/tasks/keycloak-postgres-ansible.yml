@@ -1,0 +1,26 @@
+- name: Create keycloak-postgres-pvc
+  k8s:
+    state: present
+    kind: PersistentVolumeClaim
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'pvc.yml')  | regex_replace('\\$name', item.name) }}"
+  with_items: "{{ keycloak_postgres.namespace_params }}"
+
+
+- name: Create keycloak-postgres-service
+  k8s:
+    state: present
+    kind: Service
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'keycloak-postgres-service.yml')}}"
+  with_items: "{{ keycloak_postgres.namespace_params }}"
+
+
+- name: Create keycloak-postgres-deployment
+  k8s:
+    state: present
+    kind: Deployment
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'keycloak-postgres-deployment.yml') | regex_replace('\\$claim_name', item.name) }}"
+  with_items: "{{ keycloak_postgres.namespace_params }}"
+

@@ -1,0 +1,54 @@
+---
+# tasks file for test
+- name: include mongo-task
+  include: "mongodb-ansible.yml"
+
+#- name: include mongo-task
+#  include: "minio-ansible.yml"
+
+- name: include mongo-task
+  include: "redis-ansible.yml"
+
+- name: include mongo-task
+  include: "nexus3-ansible.yml"
+
+- name: include mongo-task
+  include: "jenkins-ansible.yml"
+
+- name: include mongo-task
+  include: "keycloak-ansible.yml"
+
+- name: include mongo-task
+  include: "sonarqube-ansible.yml"
+
+- name: include mongo-task
+  include: "camunda-db-ansible.yml"
+
+- name: include mongo-task
+  include: "next-redis-ansible.yml"
+
+- name: include mongo-task
+  include: "crm-data-db-ansible.yml"
+
+- name: include mongo-task
+  include: "log-postgresql-ansible.yml"
+
+- name: include mongo-task
+  include: "mongodb-penalty-ansible.yml"
+
+- name: include mongo-task
+  include: "keycloak-postgres-ansible.yml"
+
+- name: include mongo-task
+  include: "om-httpd-docserver-ansible.yml"
+
+- name: include mongo-task
+  include: "openshift-rabbitmq-ansible.yml"
+
+- name: include mongo-task
+  include: "rule-engine-mongodb-ansible.yml"
+
+- name: include mongo-task
+  include: "notification-postgresqldb-ansible.yml"
+
+

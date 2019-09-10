@@ -1,0 +1,96 @@
+---
+create_and_delete:
+    namespaces:
+    - { namespace: "next-vfnet"}
+    - { namespace: "next-vfnet-test"}
+    - { namespace: "next-vfnet-prp" }
+minio:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "minio-pvc"  }
+    - { namespace: "next-vfnet-test", name: "minio-pvc"  }
+    - { namespace: "next-vfnet-prp", name: "minio-pvc"  }
+
+mongodb:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "mongodb-pvc" }
+    - { namespace: "next-vfnet-test", name: "mongodb-pvc"}
+    - { namespace: "next-vfnet-prp", name: "mongodb-pvc"}
+
+crm_data_db:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "crm-data-db-pvc" }
+    - { namespace: "next-vfnet-test", name: "crm-data-db-pvc"}
+    - { namespace: "next-vfnet-prp", name: "crm-data-db-pvc" }
+camunda_db:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "camunda-db-pvc"}
+    - { namespace: "next-vfnet-test", name: "camunda-db-pvc"}
+    - { namespace: "next-vfnet-prp", name: "camunda-db-pvc"}
+keycloak:
+    namespace_params:
+    - { namespace: "next-vfnet"}
+    - { namespace: "next-vfnet-test"}
+    - { namespace: "next-vfnet-prp" }
+keycloak_postgres:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "keycloak-postgres-pvc" }
+    - { namespace: "next-vfnet-test", name: "keycloak-postgres-pvc"}
+    - { namespace: "next-vfnet-prp", name: "keycloak-postgres-pvc"}
+log_postgresql:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "log-postgresql-pvc"}
+    - { namespace: "next-vfnet-test", name: "log-postgresql-pvc"}
+    - { namespace: "next-vfnet-prp", name: "log-postgresql-pvc"}
+mongodb_penalty:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "mongodb-penalty-pvc"}
+    - { namespace: "next-vfnet-test", name: "mongodb-penalty-pvc"}
+    - { namespace: "next-vfnet-prp", name: "mongodb-penalty-pvc"}
+next_redis:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "next-redis-pvc" }
+    - { namespace: "next-vfnet-test", name: "next-redis-pvc" }
+    - { namespace: "next-vfnet-prp", name: "next-redis-pvc"}
+notification_postgresqldb:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "notification-postgresqldb-pvc"}
+    - { namespace: "next-vfnet-test", name: "notification-postgresqldb-pvc"}
+    - { namespace: "next-vfnet-prp", name: "notification-postgresqldb-pvc"}
+om_httpd_docserver:
+    namespace_params:
+    - { namespace: "next-vfnet" }
+    - { namespace: "next-vfnet-test"}
+    - { namespace: "next-vfnet-prp"}
+openshift_rabbitmq:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "openshift-rabbitmq-pvc"}
+    - { namespace: "next-vfnet-test", name: "openshift-rabbitmq-pvc"}
+    - { namespace: "next-vfnet-prp", name: "openshift-rabbitmq-pvc"}
+rule_engine_mongodb:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "rule-engine-mongodb-pvc"}
+    - { namespace: "next-vfnet-test", name: "rule-engine-mongodb-pvc"}
+    - { namespace: "next-vfnet-prp", name: "rule-engine-mongodb-pvc"}
+redis:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "redis-pvc"}
+    - { namespace: "next-vfnet-test", name: "redis-pvc" }
+    - { namespace: "next-vfnet-prp", name: "redis-pvc"}
+jenkins:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "jenkins-pvc" }
+    - { namespace: "next-vfnet-test", name: "jenkins-pvc" }
+    - { namespace: "next-vfnet-prp", name: "jenkins-pvc"}
+sonarqube:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "sonarqube-pvc"}
+    - { namespace: "next-vfnet-test", name: "sonarqube-pvc"}
+    - { namespace: "next-vfnet-prp", name: "sonarqube-pvc"}
+nexus3:
+    namespace_params:
+    - { namespace: "next-vfnet", name: "nexus3-pvc"}
+    - { namespace: "next-vfnet-test", name: "nexus3-pvc"}
+    - { namespace: "next-vfnet-prp", name: "nexus3-pvc"}
+
+
+

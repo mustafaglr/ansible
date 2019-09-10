@@ -1,0 +1,17 @@
+- name: Create om-httpd-docserver-service
+  k8s:
+    state: present
+    kind: Service
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'om-httpd-docserver-service.yml')}}"
+  with_items: "{{ om_httpd_docserver.namespace_params }}"
+
+
+- name: Create om-httpd-docserver-deployment
+  k8s:
+    state: present
+    kind: Deployment
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'om-httpd-docserver-deployment.yml')}}"
+  with_items: "{{ om_httpd_docserver.namespace_params }}"
+

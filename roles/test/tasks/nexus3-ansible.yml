@@ -1,0 +1,26 @@
+- name: Create nexus3-pvc
+  k8s:
+    state: present
+    kind: PersistentVolumeClaim
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'pvc.yml')  | regex_replace('\\$name', item.name) }}"
+  with_items: "{{ nexus3.namespace_params }}"
+
+
+- name: Create nexus3-service
+  k8s:
+    state: present
+    kind: Service
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'nexus3-service.yml')}}"
+  with_items: "{{ nexus3.namespace_params }}"
+
+
+- name: Create nexus3-deployment
+  k8s:
+    state: present
+    kind: Deployment
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'nexus3-deployment.yml') | regex_replace('\\$claim_name', item.name) }}"
+  with_items: "{{ nexus3.namespace_params }}"
+

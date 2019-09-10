@@ -1,0 +1,26 @@
+- name: Create sonarqube-pvc
+  k8s:
+    state: present
+    kind: PersistentVolumeClaim
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'pvc.yml')  | regex_replace('\\$name', item.name) }}"
+  with_items: "{{ sonarqube.namespace_params }}"
+
+
+- name: Create sonarqube-service
+  k8s:
+    state: present
+    kind: Service
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'sonarqube-service.yml')}}"
+  with_items: "{{ sonarqube.namespace_params }}"
+
+
+- name: Create sonarqube-deployment
+  k8s:
+    state: present
+    kind: Deployment
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'sonarqube-deployment.yml') | regex_replace('\\$claim_name', item.name) }}"
+  with_items: "{{ sonarqube.namespace_params }}"
+

@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: keycloak
+  name: keycloak
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: keycloak
+    deploymentconfig: keycloak
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: keycloak
+        deploymentconfig: keycloak
+    spec:
+      containers:
+      - env:
+        - name: KEYCLOAK_USER
+          value: admin
+        - name: KEYCLOAK_PASSWORD
+          value: admin
+        - name: DB_VENDOR
+          value: POSTGRES
+        - name: POSTGRES_PORT_5432_TCP_ADDR
+          value: keycloak-postgres
+        - name: POSTGRES_PORT_5432_TCP_PORT
+          value: "5432"
+        - name: POSTGRES_DATABASE
+          value: keycloak
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        image: docker-registry.default.svc:5000/next-vfnet/keycloak@sha256:b6b584cc30090f54da6a72c011c0d7988ea62f160d62cc3f23dd126b5f85009b
+        imagePullPolicy: Always
+        name: keycloak
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - keycloak
+      from:
+        kind: ImageStreamTag
+        name: keycloak:latest
+        namespace: next-vfnet
+    type: ImageChange
+status:
+  availableReplicas: 0
+  latestVersion: 0
+  observedGeneration: 0
+  replicas: 0
+  unavailableReplicas: 0
+  updatedReplicas: 0
+

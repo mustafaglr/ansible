@@ -1,0 +1,26 @@
+- name: Create log-postgresql-pvc
+  k8s:
+    state: present
+    kind: PersistentVolumeClaim
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'pvc.yml')  | regex_replace('\\$name', item.name) }}"
+  with_items: "{{ log_postgresql.namespace_params }}"
+
+
+- name: Create log-postgresql-service
+  k8s:
+    state: present
+    kind: Service
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'log-postgresql-service.yml')}}"
+  with_items: "{{ log_postgresql.namespace_params }}"
+
+
+- name: Create log-postgresql-deployment
+  k8s:
+    state: present
+    kind: Deployment
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'log-postgresql-deployment.yml') | regex_replace('\\$claim_name', item.name) }}"
+  with_items: "{{ log_postgresql.namespace_params }}"
+

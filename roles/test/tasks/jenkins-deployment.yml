@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: jenkins
+  name: jenkins
+spec:
+  replicas: 1
+  selector:
+    app: jenkins
+    deploymentconfig: jenkins
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+      creationTimestamp: null
+      labels:
+        app: jenkins
+        deploymentconfig: jenkins
+    spec:
+      containers:
+      - env:
+        - name: http_proxy
+          value: http://piabbandak:Bb0203040506@172.31.53.99:8080
+        - name: https_proxy
+          value: http://piabbandak:Bb0203040506@172.31.53.99:8080
+        image: jenkins/jenkins@sha256:c3241571c1cdf9c6110fc443a855a29d5317f200a5e89d5a0245c013cbeaa71b
+        imagePullPolicy: IfNotPresent
+        name: jenkins
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 50000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "2"
+            memory: 10G
+          requests:
+            cpu: "1"
+            memory: 4G
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/jenkins_home
+          name: volume-1
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: volume-1
+        persistentVolumeClaim:
+          claimName: $claim_name
+  test: false
+  triggers:
+  - imageChangeParams:
+      containerNames:
+      - jenkins
+      from:
+        kind: ImageStreamTag
+        name: jenkins:latest
+        namespace: devops
+    type: ImageChange
+status:
+  availableReplicas: 0
+  latestVersion: 0
+  observedGeneration: 0
+  replicas: 0
+  unavailableReplicas: 0
+  updatedReplicas: 0
+

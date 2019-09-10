@@ -1,0 +1,17 @@
+- name: Create keycloak-service
+  k8s:
+    state: present
+    kind: Service
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'keycloak-service.yml')}}"
+  with_items: "{{ keycloak.namespace_params }}"
+
+
+- name: Create keycloak-deployment
+  k8s:
+    state: present
+    kind: Deployment
+    namespace: "{{ item.namespace }}"
+    definition: "{{ lookup('file', 'keycloak-deployment.yml')}}"
+  with_items: "{{ keycloak.namespace_params }}"
+

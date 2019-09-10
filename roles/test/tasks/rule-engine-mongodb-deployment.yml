@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: rule-engine-mongodb
+  name: rule-engine-mongodb
+spec:
+  replicas: 0
+  revisionHistoryLimit: 10
+  selector:
+    app: rule-engine-mongodb
+    deploymentconfig: rule-engine-mongodb
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: rule-engine-mongodb
+        deploymentconfig: rule-engine-mongodb
+    spec:
+      containers:
+      - env:
+        - name: MONGODB_ADMIN_PASSWORD
+          value: admin123
+        - name: MONGODB_DATABASE
+          value: rule_engine_db
+        - name: MONGODB_PASSWORD
+          value: Vfnet123
+        - name: MONGODB_USER
+          value: vfnet
+        image: registry.access.redhat.com/rhscl/mongodb-32-rhel7@sha256:8fea1e4a7f3ae48a2e49b74eaa23b919cb7f4ce1d2a2037fc612769116c1e4e5
+        imagePullPolicy: Always
+        name: rule-engine-mongodb
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/mongodb/data
+          name: rule-engine-mongodb-volume-1
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: rule-engine-mongodb-volume-1
+        persistentVolumeClaim:
+          claimName: $claim_name
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - rule-engine-mongodb
+      from:
+        kind: ImageStreamTag
+        name: rule-engine-mongodb:latest
+        namespace: next-vfnet
+    type: ImageChange
+status:
+  availableReplicas: 0
+  latestVersion: 0
+  observedGeneration: 0
+  replicas: 0
+  unavailableReplicas: 0
+  updatedReplicas: 0
+
